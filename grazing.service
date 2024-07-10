@@ -1,0 +1,11 @@
+[Unit]
+Description=Grazing cira algo trading 
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/etc/grazing-cira/run.sh
+
+[Install]
+WantedBy=multi-user.target
