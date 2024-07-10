@@ -1,10 +1,11 @@
 import time 
 import datetime
+import logging
 
 
 def main():
     while True: 
-        print(f"hello world {datetime.datetime.now().strftime('%H:%M:%S')}")
+        logging.warn(f"hello world {datetime.datetime.now().strftime('%H:%M:%S')}")
         time.sleep(1)
 
 

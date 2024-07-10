@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/etc/grazing-cira/run.sh
+ExecStart=sh /home/axel/Programs/repositories/grazing-cira/run.sh
 
 [Install]
 WantedBy=multi-user.target
