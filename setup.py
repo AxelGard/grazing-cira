@@ -12,7 +12,8 @@ setup(
     author_email="axel.gard@tutanota.com",
     license="MIT",
     packages=[
-        "grazing",
+        "grazing", 
+        "grazing.features",
     ],
     long_description=long_description,
     long_description_content_type="text/markdown",
