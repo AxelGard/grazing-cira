@@ -9,7 +9,3 @@ class FeatruePipe(BaseEstimator, TransformerMixin):
     def transform(self, X:pd.DataFrame):
         raise NotImplementedError
 
-
-class FeatureLoad: 
-    def load(self) -> pd.DataFrame:
-        raise NotImplementedError

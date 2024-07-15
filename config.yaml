@@ -1,0 +1,14 @@
+alpaca: 
+    key_file: "../alpc_key.json"
+    inital_capital: 300000
+
+trading:
+    symbols: ["AAPL"] #["AAPL", "MSFT", "AMZN", "INTC", "GOOGL"] 
+    strategy: "./grazing/strategies/bollinger_bands.pkl"
+    features:
+        start_date: "2024-1-1"
+        pipe: "simple"
+
+settings:
+    data_store_path: "./data"
+    local_exec_time: "19:00"

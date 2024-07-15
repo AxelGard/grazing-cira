@@ -14,6 +14,7 @@ setup(
     packages=[
         "grazing", 
         "grazing.features",
+        "grazing.strategies",
     ],
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -23,6 +24,7 @@ setup(
         "scikit-learn",
         "pandas",
         "numpy",
+        "pyyaml",
     ],
     extras_requires={"dev": ["pytest"]},
     classifiers=[

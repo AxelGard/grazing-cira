@@ -4,32 +4,27 @@ from datetime import date
 from os.path import exists
 from datetime import datetime
 from pandas.tseries.offsets import BusinessDay
-
+from grazing.config import load_config
 import cira
 from . import base 
-from grazing.config import DATA_STORE_PATH
 
-class BarsPipe(base.FeatruePipe):
- 
-    def __init__(self, symbol:str, start:datetime, end:datetime, add_symbol_to_col:bool=True) -> None:
+class BarsPipe(base.FeatruePipe): 
+    def __init__(self, symbol:str, start:datetime, end:datetime, add_symbol_to_col:bool=True, data_store:str=".") -> None:
         super().__init__()
         self.symbol = symbol
         self.start = start.date()
         self.end = end.date()
         self.is_crypto = "/" in symbol
         self.add_symbol_to_col = add_symbol_to_col
+        self.data_store = load_config("./config.yaml")["settings"]["data_store_path"]
 
     def transform(self, X: pd.DataFrame):
         df = self.load()
         df.drop(columns=["symbol"], inplace=True)
-        if self.add_symbol_to_col: 
-            for i, col_name in enumerate(df.keys()):
-                df.columns.values[i] = f"{self.symbol}_{col_name}"
         return pd.concat([X, df], axis=1)
 
     def load(self) -> pd.DataFrame:
-        global DATA_STORE_PATH
-        file_path = DATA_STORE_PATH + f'/{self.symbol.replace("/", "_")}.csv'
+        file_path = self.data_store + f'/{self.symbol.replace("/", "_")}.csv'
 
         if self.is_crypto:
             ast = cira.Cryptocurrency(self.symbol)
