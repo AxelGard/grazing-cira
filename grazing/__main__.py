@@ -79,14 +79,14 @@ def main_debug():
     print("Got config")
     strat = cira.strategy.Strategy.load("/home/axel/Programs/repositories/grazing-cira/grazing/strategies/bollinger_bands.pkl")
     print(strat.risk)
-    
+    print() 
     start =  datetime.strptime(config["trading"]["features"]["start_date"], "%Y-%m-%d")
     end   = datetime.today() - timedelta(days=1) 
 
     symbols = config["trading"]["symbols"]
     prices = collect_prices(symbols=symbols, start=start, end=end)
 
-    pipes = config["trading"]["features"]
+    pipes = config["trading"]["features"]["pipe"]
     features = collect_features(pipes=pipes, symbols=symbols, start=start, end=end)
     print(features)
 

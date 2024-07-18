@@ -17,15 +17,10 @@ def collect_prices(symbols:list[str], start:datetime, end:datetime) -> pd.DataFr
 def collect_features(pipes:list[str], symbols:list[str], start:datetime, end:datetime) -> pd.DataFrame:
     features = []
     for p in pipes: 
-        features += [(p, availabel_pipes[p](symbol=symbols, start=start, end=end)) for sym in symbols]
-
-    features = []
-    for s in symbols: 
-        for p in pipes: 
-            features += [(p)]
+        features += [(p, availabel_pipes[p](symbol=sym, start=start, end=end)) for sym in symbols]
 
     pipe = Pipeline(features) 
-    return pipe.transform(pd.DataFrame())
+    return pipe.fit_transform(pd.DataFrame())
 
 
 

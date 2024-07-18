@@ -7,7 +7,7 @@ trading:
     strategy: "./grazing/strategies/bollinger_bands.pkl"
     features:
         start_date: "2024-1-1"
-        pipe: "simple"
+        pipe: ["simple"]
 
 settings:
     data_store_path: "./data"
