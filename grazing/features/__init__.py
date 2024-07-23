@@ -4,7 +4,7 @@ import pandas as pd
 
 from grazing.features.bars import BarsPipe, PricePipe
 from grazing.features.util import AddSymbolToColumns 
-from grazing.features.groups import feature_group_simple
+from grazing.features.groups import feature_group_simple, feature_group_basic_techincal_analysis
 
 
 def collect_prices(symbols:list[str], start:datetime, end:datetime) -> pd.DataFrame:
@@ -17,7 +17,8 @@ def collect_prices(symbols:list[str], start:datetime, end:datetime) -> pd.DataFr
 def collect_features(pipes:list[str], symbols:list[str], start:datetime, end:datetime) -> pd.DataFrame:
     features = []
     for p in pipes: 
-        features += [(p, availabel_pipes[p](symbol=sym, start=start, end=end)) for sym in symbols]
+        for sym in symbols:
+            features += availabel_pipes[p](symbol=sym, start=start, end=end) 
 
     pipe = Pipeline(features) 
     return pipe.fit_transform(pd.DataFrame())
@@ -26,4 +27,5 @@ def collect_features(pipes:list[str], symbols:list[str], start:datetime, end:dat
 
 availabel_pipes = {
     "simple": feature_group_simple, 
+    "technical": feature_group_basic_techincal_analysis
 }

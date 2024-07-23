@@ -1,15 +1,12 @@
 import datetime
 import logging
 from datetime import datetime, timedelta
-from sklearn.pipeline import Pipeline
 import pandas as pd 
 import numpy as np
 import cira 
-import pickle
 from grazing.strategies import load_startegy
 from grazing.strategies.bollinger_bands import BollingStartegy
 from grazing.features import collect_features, collect_prices
-from grazing.features.bars import BarsPipe, PricePipe
 from grazing.config import config, load_config
 
 log = logging.getLogger(__name__)
@@ -44,7 +41,7 @@ def run():
     config = load_config("./config.yaml")
     strat = load_startegy("/home/axel/Programs/repositories/grazing-cira/grazing/strategies/bollinger_bands.pkl")
 
-    start = datetime(config["trading"]["features"]["start_date"])
+    start =  datetime.strptime(config["trading"]["features"]["start_date"], "%Y-%m-%d")
     end   = datetime.today() - timedelta(days=1) 
 
     symbols = config["trading"]["symbols"]
