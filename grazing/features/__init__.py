@@ -14,18 +14,16 @@ def collect_prices(symbols:list[str], start:datetime, end:datetime) -> pd.DataFr
     prices_pipe =  Pipeline([(f"bars_{sym}", PricePipe(sym, "close")) for sym in symbols])
     return prices_pipe.fit_transform(bars)
 
-def collect_features(pipes:list[str], symbols:list[str], start:datetime, end:datetime) -> pd.DataFrame:
-    features = []
-    for p in pipes: 
-        for sym in symbols:
-            features += availabel_pipes[p](symbol=sym, start=start, end=end) 
+def collect_features(pipe:str, symbols:list[str], start:datetime, end:datetime) -> pd.DataFrame:
+    features = [] 
+    for sym in symbols:
+        features += availabel_pipes[pipe](symbol=sym, start=start, end=end) 
 
     pipe = Pipeline(features) 
     return pipe.fit_transform(pd.DataFrame())
 
 
-
 availabel_pipes = {
-    "simple": feature_group_simple, 
+    "bars": feature_group_simple, 
     "technical": feature_group_basic_techincal_analysis
 }

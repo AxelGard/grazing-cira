@@ -2,7 +2,9 @@ from operator import is_
 import pandas as pd 
 from datetime import date
 from os.path import exists
+from pathlib import Path
 from datetime import datetime
+import os 
 from pandas.tseries.offsets import BusinessDay
 from grazing.config import load_config
 import cira
@@ -24,6 +26,8 @@ class BarsPipe(base.FeatruePipe):
         return pd.concat([X, df], axis=1)
 
     def load(self) -> pd.DataFrame:
+        if not Path(self.data_store).is_dir():
+            os.system(f"mkdir {self.data_store}")
         file_path = self.data_store + f'/{self.symbol.replace("/", "_")}.csv'
 
         if self.is_crypto:

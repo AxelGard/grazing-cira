@@ -4,7 +4,10 @@ import cira
 
 from cira.strategy import back_test
 import numpy as np
+import logging
+import os 
 
+log = logging.getLogger(__name__)
 
 class BollingStartegy(cira.strategy.Strategy):
 
@@ -14,6 +17,14 @@ class BollingStartegy(cira.strategy.Strategy):
         self.standard_deviation = standard_deviation
         self.risk = risk 
         self.allocation = []
+        path = "./grazing/strategies/bollinger_bands.pkl"
+        if os.path.isfile(path):
+            log.info("loading strategy cached in pkl file")
+            c = BollingStartegy.load(path)
+            self.sma_window = c.sma_window
+            self.standard_deviation = c.standard_deviation
+            self.risk = c.risk 
+            
 
     def iterate(self, feature_data: DataFrame, prices: DataFrame, portfolio: ndarray, cash:float)-> ndarray: 
         _feature_data = feature_data.copy()
@@ -55,13 +66,10 @@ class BollingStartegy(cira.strategy.Strategy):
                         best_prof = prof
                         risk = r
 
-        print(f"sma:{best_sma}, std:{best_std} @ risk {risk}, portfolio change {best_prof:.2f}$")
+        log.info(f"sma:{best_sma}, std:{best_std} @ risk {risk}, portfolio change {best_prof:.2f}$")
 
         self.sma_window = best_sma
         self.standard_deviation = best_std
         self.risk = risk
         return self
                 
-
-    def collect_feature(self):
-        pass 

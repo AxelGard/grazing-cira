@@ -4,10 +4,10 @@ alpaca:
 
 trading:
     symbols: ["AAPL"] #["AAPL", "MSFT", "AMZN", "INTC", "GOOGL"] 
-    strategy: "./grazing/strategies/bollinger_bands.pkl"
+    strategy: "bolling" 
     features:
         start_date: "2024-1-1"
-        pipe: ["simple"]
+        pipe: "bars"
 
 settings:
     data_store_path: "./data"
