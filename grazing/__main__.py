@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd 
 import numpy as np
 import cira 
+import sys
 from grazing.strategies import load_startegy
 from grazing.features import collect_features, collect_prices
 from grazing.config import config, load_config
@@ -102,4 +103,7 @@ def main_debug():
 
 
 if __name__ == "__main__":
-    main_debug()
+    if "-d" in sys.argv:
+        main_debug()
+    else: 
+        main_prod()
