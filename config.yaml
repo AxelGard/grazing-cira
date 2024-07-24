@@ -3,11 +3,11 @@ alpaca:
     inital_capital: 300000
 
 trading:
-    symbols: ["AAPL"] #["AAPL", "MSFT", "AMZN", "INTC", "GOOGL"] 
+    symbols: ["AAPL", "MSFT", "AMZN", "INTC", "GOOGL"] 
     strategy: "bolling" 
     features:
         start_date: "2024-1-1"
-        pipe: "bars"
+        pipe: "price"
 
 settings:
     data_store_path: "./data"

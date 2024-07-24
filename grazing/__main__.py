@@ -6,7 +6,7 @@ import numpy as np
 import cira 
 import sys
 from grazing.strategies import load_startegy
-from grazing.features import collect_features, collect_prices
+from grazing.features import collect_features
 from grazing.config import config, load_config
 from grazing.strategies import * # BUG: all stat classes needs to be in this scope for pkl to load file
 
@@ -47,7 +47,7 @@ def run():
     end   = datetime.today() 
 
     symbols = config["trading"]["symbols"]
-    prices = collect_prices(symbols=symbols, start=start, end=end)
+    prices = collect_features(pipe="price", symbols=symbols, start=start, end=end)
 
     pipe = config["trading"]["features"]["pipe"]
     features = collect_features(pipe=pipe, symbols=symbols, start=start, end=end)
@@ -81,10 +81,7 @@ def main_prod():
 def main_debug():
     global config
     config = load_config("./config.yaml")
-    logging.basicConfig(
-        datefmt="%Y-%m-%d %H:%M",
-        level=logging.DEBUG
-    )
+    #logging.basicConfig( level=logging.DEBUG )
 
     cira.auth.KEY_FILE = config["alpaca"]["key_file"]
     assert cira.auth.check_keys(), "set alpaca keys did not work"
@@ -93,13 +90,11 @@ def main_debug():
     end   = datetime.today() 
 
     symbols = config["trading"]["symbols"]
-    prices = collect_prices(symbols=symbols, start=start, end=end)
+    prices = collect_features(pipe="price", symbols=symbols, start=start, end=end)
 
     pipe = config["trading"]["features"]["pipe"]
     features = collect_features(pipe=pipe, symbols=symbols, start=start, end=end)
-
-    strat = load_startegy(config["trading"]["strategy"])
-    run() 
+    print(features)
 
 
 if __name__ == "__main__":

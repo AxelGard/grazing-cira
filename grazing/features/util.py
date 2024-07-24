@@ -1,5 +1,6 @@
 from grazing.features.base import FeatruePipe
 import pandas as pd 
+import typing
 
 
 class AddSymbolToColumns(FeatruePipe):
@@ -18,3 +19,21 @@ class FillNa(FeatruePipe):
 
     def transform(self, X: pd.DataFrame):
         return X.fillna(self.fill_with)
+
+
+class DropNa(FeatruePipe):
+    def transform(self, X: pd.DataFrame):
+        return X.dropna()
+
+
+class SelectColumn(FeatruePipe):
+    def __init__(self, column:str, change_name_to:typing.Union[str, None]=None) -> None:
+        self.column = column
+        self.change_name_to = change_name_to
+
+    def transform(self, X: pd.DataFrame): 
+        if self.change_name_to == None: 
+            return X[self.column].to_frame()
+        df = pd.DataFrame()
+        df[self.change_name_to] = X[self.column]
+        return df
